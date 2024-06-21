@@ -6,10 +6,10 @@ import {AttackVector} from "../src/vectors.sol";
 
 
 contract attackTest is Test{
-    VulnerableContract public contractInstance;
+    AttackVector public contractInstance;
 
     function beforeAll() public {
-        contractInstance = new VulnerableContract(1000);
+        contractInstance = new AttackVector(1000);
     }
 
     function testIntegerOverflow() public {
@@ -19,7 +19,7 @@ contract attackTest is Test{
 
     function testReentrancy() public payable {
         // Test reentrancy in maliciousWithdraw function
-        contractInstance.maliciousWithdraw(address(this), 1 ether);
+        contractInstance.withdraw(address(this), 1 ether);
     }
 
     function testDoSWithGasLimit() public {
@@ -31,7 +31,7 @@ contract attackTest is Test{
 
     function testUncheckedExternalCall() public {
         // Test maliciousWithdraw to an untrusted contract
-        contractInstance.maliciousWithdraw(address(this), 1 ether);
+        contractInstance.withdraw(address(this), 1 ether);
     }
 
     function testAccessControlIssues() public {
